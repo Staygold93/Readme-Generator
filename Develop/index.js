@@ -1,114 +1,101 @@
 // TODO: Include packages needed for this application
-const fs = require("fs");
+
 const inquirer = require("inquirer");
-// TODO: Create an array of questions for user input
-// const questions = [];
+const fs = require("fs");
+const util = require("util");
 
-const readMeTemp = ({userName, contact , project ,projectDescription,license,installingDependencies,testCommands,repoInfo,contributions}) => {
-    `
-    #User-Name
-    ${userName},
-   
-    #Contact
-    ${contact},
-   
-    #Project
-    ${project},
-    
-    #Description
-    ${projectDescription},
-     
-    #license
-    ${license},
-    
-    #Installing-Dependencies
-    ${installingDependencies},
-    
-    #Test-Commands
-    ${testCommands},
-    
-    #Repo-Info
-    ${repoInfo},
-    
-    #Contributions
-    ${contributions},
-    
-    `
-}
+const generatorMarkdown = require('./utils/generateMarkdown');
+const { title } = require("process");
 
 
-inquirer
-    .prompt([
+
+    const questions = [
         {
             type: "input",
-            message: "what is your GitHub username",
-            name: "userName",
+            message: "What is the title of you Project?",
+            name: "title",
         },
         {
             type: "input",
-            message: "what is your email address?",
-            name: "contact",
+            message: "Give a bried description of what your project's about.",
+            name: "description",
         },
         {
             type: "input",
-            message: "what is your projects name?",
-            name: "project",
+            message: "Table of Contents",
+            name: "table of Contents",
         },
         {
             type: "input",
-            message: "Please write a short description of your project",
-            name: "project-description",
+            message: "What does the user need to install this app?(dependencies)",
+            name: "Installation",
         },
         {
             type: "input",
-            message: "What kind of license should your project have?",
+            message: "Please explain how this app will be used?",
+            name: "Usage",
+        },
+        {
+            type: "input",
+            message: "What license is required?",
             name: "License",
         },
+        
         {
             type: "input",
-            message: "What command should be run to install dependencies?",
-            name: "Installing-dependencies",
+            message: "Who is contributing to this project?",
+            name: "contributions",
         },
         {
             type: "input",
-            message: "What command should be run to run tests?",
-            name: "tests-commands",
+            message: "What commands are needed to test this app?",
+            name: "Tests",
         },
         {
             type: "input",
-            message: "What does the user need to know about using the repo?",
-            name: "repo-info",
+            message: " Provide contact Info for Inquiries",
+            name: "Questions",
         },
         {
             type: "input",
-            message: "What does the user need to know about contributing to the repo?",
-            name: "Contributions",
+            message: "Please provide your Github username",
+            name: "username",
         },
-    ])
+        {
+            type: "input",
+            message: " What is your email address?",
+            name: "email",
+        },
+    ]
 
     // TODO: Create a function to write README file
-    .then((results) => {
-        console.log("RESULTS?", results);
-        const filename = `${results.project.toLowerCase().replace("","")}.md`;
-        fs.writeFile(filename,readMeTemp(results), (err) => {
-            if(err) {
-                console.log(err);
+    function writeToFile(filename,data) {
+               
+        fs.writeFile(filename,data,function(err){
+            console.log(filename)
+            console.log(data)
+            if (err) {
+                return console.log(err)
             } else {
-                console.log("Your README has been generated!!")
+                console.log("success")
             }
-        });
-        });
+        })
+          
 
-        
+    }
 
-       
+
+    // function to initialize program
+    function init() {
+        inquirer.prompt(questions)
+        .then(function(data){
+            writeToFile("README.md" , generatorMarkdown(data));
+            console.log(data)
+        })
+    }
+   
+   
+   init()
+   
+   
   
-
-
-
-
-// // TODO: Create a function to initialize app
-// function init() {}
-
-// // Function call to initialize app
-// init();
