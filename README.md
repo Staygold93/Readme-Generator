@@ -32,4 +32,3 @@ If you have any questions about the repo , contact Staygold93
 https://drive.google.com/file/d/1lckFLukq47G4iRfycRK7YRxr36vgHf2p/view?usp=sharing 
 
 
-[How to create a Professional README](https://coding-boot-camp.github.io/full-stack/github/professional-readme-guide)
